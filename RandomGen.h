@@ -1,7 +1,8 @@
 #ifndef RANDOMGEN_H
 #define RANDOMGEN_H
-#define <random>
-#definr "Generator.h"
+
+#include <random>
+#include "Generator.h"
 
 template <class G>
 class RandomGen: public Generator
@@ -9,6 +10,7 @@ class RandomGen: public Generator
 private:
     G generator;
 public:
+
     RandomGen(){};
     ~RandomGen(){};
     virtual double losujLiczbe();
@@ -18,13 +20,14 @@ public:
 template <class G>
 double RandomGen<G>::losujLiczbe()
 {
-    return (double)(generator()/generator.max());
+    double i=generator(),p=generator.max();
+    return (i/p);
 }
 template <class G>
 std::vector<double> RandomGen<G>::losujTablice(int n)
 {
-    vector<double> vec(n)
-    for(int i=0; i<vec.size(); i++) vec[i]=generator();
+    std::vector<double> vec(n);
+    for(int i=0; i<vec.size(); i++) vec[i]=(double)losujLiczbe();
     return vec;
 }
 template <class G>
@@ -32,4 +35,6 @@ void RandomGen<G>::setSeed(double newSeed)
 {
     generator.seed(newSeed);
 }
+template <>   //klasa random_device nie ma seeda
+void RandomGen<std::random_device>::setSeed(double newSeed){}
 #endif // RANLUX24

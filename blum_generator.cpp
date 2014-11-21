@@ -1,6 +1,6 @@
 #include "blum_blum.h"
 
-Blum_Generator::Blum_Generator():prime_number_1(167),prime_number_2(179),base_modulo(prime_number_1*prime_number_2),min(0),max(10000)
+Blum_Generator::Blum_Generator():prime_number_1(167),prime_number_2(179),base_modulo(prime_number_1*prime_number_2)
 {
     long seed = std::chrono::system_clock::now().time_since_epoch().count();
     current_random_number=seed;

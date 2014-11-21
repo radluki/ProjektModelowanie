@@ -14,7 +14,7 @@ public:
     Blum_Generator();
     ~Blum_Generator(){};
     double operator()();
-    virtual double losujLiczbe()
+    virtual double losujLiczbe();
     virtual void setSeed(double newSeed);
     virtual std::vector<double> losujTablice(int n);
 };
