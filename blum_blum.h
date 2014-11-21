@@ -1,8 +1,8 @@
 #ifndef BLUM_H
 #define BLUM_H
-#include //"kalsa bazowa
+#include "Generator.h"
 #include <chrono>
-class Blum_Generator: public /* wpisz klase bazowa*/
+class Blum_Generator: public Generator
 {
 private:
     int prime_number_1;//167    //prime_number_1 mod 4=3
