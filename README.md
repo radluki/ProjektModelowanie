@@ -1,16 +1,7 @@
-MATLAB
+LABView
 ==================
-Wpiszcie tutaj zadania dotyczące MATLABA do których się zobowiązujecie.  
-Przypominam w matlabie robimy tylko system ciągły
+Jeżeli ktoś jest chętny do pomocy to wpiszcie się tutaj.   
+Wystarczy, że zdobędziecie skądś LABView, a ja już wam mogę wytłumaczyć podstawy.
 
 ###### Łukasz:
-  -znajdę model z opisem analitycznym który możnaby zaimplementować,  
-  -jeżeli chodzi o samą implementację to mogę zrobić wszystko sam, chyba że jesteście chętni, to wtedy ewentualnie mogę udzielić wskazówek, roboty nie ma dużo, pod względem technicznym mam wszystko rozpracowane.
-
-###### Marcin:
-
-###### Kamil:
-
-###### Ignacy:
-
-###### Maciek:
+  -W drugim tygodniu grudnia zacznę pracę nad systemem dyskretnym
