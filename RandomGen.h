@@ -3,7 +3,14 @@
 
 #include <random>
 #include "Generator.h"
-
+//obslugwane klasy
+//std::default_random_engine
+//std::random_device
+//std::ranlux24
+//std::ranlux48
+//std::minstd_rand0
+//std::minstd_rand
+//std::linear_congruential_engine<class UIntType, UIntType a, UIntType c, UIntType m> generator liniowy itp
 template <class G>
 class RandomGen: public Generator
 {
