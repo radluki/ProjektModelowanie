@@ -13,22 +13,22 @@ double Blum_Generator::to_draw_number()
     current_random_number=next_random_number;
     return (double)current_random_number/(base_modulo-1);
 }
-double operator()()
+double Blum_Generator::operator()()
 {
     return to_draw_number();
 }
-double losujLiczbe()
+double Blum_Generator::losujLiczbe()
 {
     return to_draw_number();
 }
-std::vector<double> losujTablice(int n)
+std::vector<double> Blum_Generator::losujTablice(int n)
 {
     std::vector<double> vek(n);
 	for(int i=0; i<vek.size(); i++)
-		wek[i]=to_draw_number();
+		vek[i]=to_draw_number();
 	return vek;
 }
-virtual void setSeed(double newSeed)
+void Blum_Generator::setSeed(double newSeed)
 {
     current_random_number=newSeed;
 }

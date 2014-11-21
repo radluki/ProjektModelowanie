@@ -7,6 +7,8 @@ Wpiszcie tutaj zadania dotyczące GENERATORÓW do których się zobowiązujecie.
 ###### Kamil:
   -generator blum blum
   
+  -klasa szablonowa dla generatorów z random
+  
 ###### Łukasz:
   -interfejs klas Test i Generator  
   -test pi  
