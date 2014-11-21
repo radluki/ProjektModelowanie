@@ -1,0 +1,13 @@
+all: test_test_pi
+test_test_pi: test_pi.o test_test_pi.o Test.o RandL.o
+	g++ test_pi.o test_test_pi.o Test.o RandL.o -o test_test_pi
+test_pi.o: test_pi.cpp
+	g++ test_pi.cpp -c -std=c++11
+test_test_pi.o: test_test_pi.cpp
+	g++ test_test_pi.cpp -c -std=c++11
+Test.o: Test.cpp
+	g++ Test.cpp -c -std=c++11
+RandL.o: RandL.cpp
+	g++ RandL.cpp -c -std=c++11
+clear:
+	rm *~ *.o
