@@ -1,0 +1,11 @@
+all: testRandL
+testRandL: Generator.o testRandL.o RandL.o
+	g++ -o testRandL testRandL.o Generator.o RandL.o
+Generator.o: Generator.h Generator.cpp
+	g++ Generator.cpp -c
+testRandL.o: testRandL.cpp 
+	g++ testRandL.cpp -c
+RandL.o: RandL.h RandL.cpp 
+	g++ RandL.cpp -c
+clear:
+	rm *.o
