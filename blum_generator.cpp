@@ -6,15 +6,15 @@ Blum_Generator::Blum_Generator():prime_number_1(167),prime_number_2(179),base_mo
     current_random_number=seed;
 }
 
-long Blum_Generator::to_draw_number()
+unsigned long Blum_Generator::to_draw_number()
 {
     long next_random_number;
     next_random_number=((current_random_number*current_random_number)%base_modulo);
     current_random_number=next_random_number;
     return current_random_number%max+min; /*????????? czy to nie popsuje algorytmu*/
-    return current_random_number;
+    //return current_random_number;
 }
-long operator()()
+unsigned long operator()()
 {
     return to_draw_number()
 }
