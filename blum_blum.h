@@ -12,7 +12,7 @@ private:
     long current_random_number;
 public:
     Blum_Generator();
-    ~Blum_Generator();
+    ~Blum_Generator(){};
     double operator()();
     virtual double losujLiczbe()
     virtual void setSeed(double newSeed);
