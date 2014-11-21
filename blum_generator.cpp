@@ -25,10 +25,10 @@ std::vector<double> losujTablice(int n)
 {
     std::vector<double> vek(n);
 	for(int i=0; i<vek.size(); i++)
-		wek[i]=to_draw_number();
+		vek[i]=to_draw_number();
 	return vek;
 }
-virtual void setSeed(double newSeed)
+void setSeed(double newSeed)
 {
     current_random_number=newSeed;
 }
