@@ -13,8 +13,9 @@ private:
     unsigned long min,max;
 public:
     Blum_Generator();
-    void set_min(long new_min){if(min<max) min=new_min};
+    void set_min(long new_min){if(min<max and min>0) min=new_min};
     void set_max(long new_max){if(max>min and max>0) max=new_max};
+    unsigned long operator()();
 };
 
 
