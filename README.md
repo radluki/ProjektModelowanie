@@ -5,3 +5,5 @@ Wystarczy, że zdobędziecie skądś LABView, a ja już wam mogę wytłumaczyć 
 
 ###### Łukasz:
   -W drugim tygodniu grudnia zacznę pracę nad systemem dyskretnym
+###### Kamil:
+  -chętny jestem 
