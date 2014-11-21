@@ -9,6 +9,8 @@
 //kożystajcie z stl, chyba że macie poważne powody przeciwko
 #include<ctime>
 //Seed ma mieć możliwość przyjmowania double'a oraz czasu
+#include<chrono>
+// do ustawiana seed zamias tbiblioteki ctime
 
 class Generator
 {
