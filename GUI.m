@@ -58,7 +58,7 @@ handles.b=0;
 handles.r=0;
 handles.s=0;
 handles.x0=[0;0];
-delta=0.001
+delta=0.1
 handles.da=delta;
 handles.db=delta;
 handles.dr=delta;
@@ -216,7 +216,7 @@ a=handles.a;
 b=handles.b;
 s=handles.s;
 r=handles.r;
-Tablica_parametrow=[a; b; s; r];
+Tablica_parametrow=[a; b; s; r;handles.x0];
 da=handles.da;
 db=handles.db;
 ds=handles.ds;
@@ -225,15 +225,16 @@ a=losuj_parametr(a,da);
 b=losuj_parametr(b,db);
 s=losuj_parametr(s,ds);
 r=losuj_parametr(r,dr);
-Tablica_parametrow=[Tablica_parametrow  [a; b; s; r]]
-tspan=linspace(0,100,100);
+
+tspan=linspace(0,1,100);
 x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
 x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
+Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
 plot(handles.axes1,T,Y);
 guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
-somenames={'a','b','s','r'};
+somenames={'a','b','s','r','V','P'}
 set(handles.axes2,'xticklabel',somenames);
 disp('Gotowe');
 
