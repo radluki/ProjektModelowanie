@@ -58,7 +58,7 @@ handles.b=0;
 handles.r=0;
 handles.s=0;
 handles.x0=[0;0];
-delta=0.1
+delta=4
 handles.da=delta;
 handles.db=delta;
 handles.dr=delta;
@@ -211,11 +211,13 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+tspan=linspace(0,1,100);
 a=handles.a;
 b=handles.b;
 s=handles.s;
 r=handles.r;
+x0=handles.x0;
+[T1,Y1]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0)
 Tablica_parametrow=[a; b; s; r;handles.x0];
 da=handles.da;
 db=handles.db;
@@ -225,19 +227,21 @@ a=losuj_parametr(a,da);
 b=losuj_parametr(b,db);
 s=losuj_parametr(s,ds);
 r=losuj_parametr(r,dr);
-
-tspan=linspace(0,1,100);
 x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
 x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
+
 Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
-plot(handles.axes1,T,Y);
+
+plot(handles.axes1,T,[Y,Y1]);
+legend(handles.axes1,'V1','P1','V2','P2');
 guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
 somenames={'a','b','s','r','V','P'}
 set(handles.axes2,'xticklabel',somenames);
 disp('Gotowe');
 
+%%
 % --- Executes during object creation, after setting all properties.
 function sliderP_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderP (see GCBO)
