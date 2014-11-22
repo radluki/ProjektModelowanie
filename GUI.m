@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 22-Nov-2014 12:03:06
+% Last Modified by GUIDE v2.5 22-Nov-2014 12:57:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -58,7 +58,7 @@ handles.b=0;
 handles.r=0;
 handles.s=0;
 handles.x0=[0;0];
-delta=0.000
+delta=0.001
 handles.da=delta;
 handles.db=delta;
 handles.dr=delta;
@@ -216,7 +216,7 @@ a=handles.a;
 b=handles.b;
 s=handles.s;
 r=handles.r;
-set(handles.info,'String',num2str(a));
+Tablica_parametrow=[a; b; s; r];
 da=handles.da;
 db=handles.db;
 ds=handles.ds;
@@ -225,15 +225,17 @@ a=losuj_parametr(a,da);
 b=losuj_parametr(b,db);
 s=losuj_parametr(s,ds);
 r=losuj_parametr(r,dr);
+Tablica_parametrow=[Tablica_parametrow  [a; b; s; r]]
 tspan=linspace(0,100,100);
 x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
 x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
-plot(T,Y);
+plot(handles.axes1,T,Y);
 guidata(hObject,handles);
-
-
-
+bar(handles.axes2,Tablica_parametrow);
+somenames={'a','b','s','r'};
+set(handles.axes2,'xticklabel',somenames);
+disp('Gotowe');
 
 % --- Executes during object creation, after setting all properties.
 function sliderP_CreateFcn(hObject, eventdata, handles)

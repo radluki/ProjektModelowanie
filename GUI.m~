@@ -22,7 +22,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 22-Nov-2014 11:07:25
+% Last Modified by GUIDE v2.5 22-Nov-2014 12:57:45
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -58,7 +58,7 @@ handles.b=0;
 handles.r=0;
 handles.s=0;
 handles.x0=[0;0];
-delta=0.000
+delta=0.001
 handles.da=delta;
 handles.db=delta;
 handles.dr=delta;
@@ -96,7 +96,7 @@ function sliderA_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.a=get(hObject,'Value');
-
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function sliderA_CreateFcn(hObject, eventdata, handles)
@@ -108,8 +108,8 @@ function sliderA_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
-handles.a=get(hObject,'Value');
-
+handles.a=get(hObject,'Value')
+guidata(hObject,handles);
 
 % --- Executes on slider movement.
 function sliderB_Callback(hObject, eventdata, handles)
@@ -121,7 +121,7 @@ function sliderB_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 handles.b=get(hObject,'Value');
-
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function sliderB_CreateFcn(hObject, eventdata, handles)
@@ -134,7 +134,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 handles.b=get(hObject,'Value');
-
+guidata(hObject,handles);
 
 % --- Executes on slider movement.
 function sliderS_Callback(hObject, eventdata, handles)
@@ -145,7 +145,7 @@ function sliderS_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.s=get(hObject,'Value');
-
+guidata(hObject,handles);
 
 % --- Executes during object creation, after setting all properties.
 function sliderS_CreateFcn(hObject, eventdata, handles)
@@ -158,7 +158,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 handles.s=get(hObject,'Value');
-
+guidata(hObject,handles);
 
 % --- Executes on slider movement.
 function sliderR_Callback(hObject, eventdata, handles)
@@ -170,7 +170,7 @@ function sliderR_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 handles.r=get(hObject,'Value');
-
+guidata(hObject,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderR_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderR (see GCBO)
@@ -182,7 +182,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 handles.r=get(hObject,'Value');
-
+guidata(hObject,handles);
 % --- Executes on slider movement.
 function sliderV_Callback(hObject, eventdata, handles)
 % hObject    handle to sliderV (see GCBO)
@@ -192,7 +192,7 @@ function sliderV_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.x0(1)=get(hObject,'Value');
-
+guidata(hObject,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderV_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderV (see GCBO)
@@ -204,18 +204,19 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 handles.xo(2)=get(hObject,'Value');
-
+guidata(hObject,handles);
 %% Symulacja
 % --- Executes on button press in pushbutton1.
 function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(info,'String','lala');
+
 a=handles.a;
 b=handles.b;
 s=handles.s;
 r=handles.r;
+Tablica_parametrow=[a; b; s; r];
 da=handles.da;
 db=handles.db;
 ds=handles.ds;
@@ -224,20 +225,37 @@ a=losuj_parametr(a,da);
 b=losuj_parametr(b,db);
 s=losuj_parametr(s,ds);
 r=losuj_parametr(r,dr);
+Tablica_parametrow=[Tablica_parametrow  [a; b; s; r]]
 tspan=linspace(0,100,100);
 x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
 x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
-plot(T,Y);
+plot(handles.axes1,T,Y);
+guidata(hObject,handles);
+bar(handles.axes2,Tablica_parametrow);
+somenames={'a','b','s','r'};
+set(handles.axes2,'xticklabel',somenames);
+disp('Gotowe');
+
+% --- Executes during object creation, after setting all properties.
+function sliderP_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderP (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
 
 
+% --- Executes on slider movement.
+function sliderP_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderP (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
-
-
-
-
-
-
-
-
-
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.x0(2)=get(hObject,'Value');
+guidata(hObject,handles);
