@@ -53,11 +53,11 @@ function GUI_OpeningFcn(hObject, eventdata, handles, varargin)
 % varargin   command line arguments to GUI (see VARARGIN)
 %% Deklaracje
 % Tu należy umieścić nowe pola struktury handles
-handles.a=0;
-handles.b=0;
-handles.r=0;
-handles.s=0;
-handles.x0=[0;0];
+handles.a;
+handles.b;
+handles.r;
+handles.s;
+handles.x0=[1;2];
 delta=4
 handles.da=delta;
 handles.db=delta;
