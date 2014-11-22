@@ -33,7 +33,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 22-Nov-2014 12:57:45
+% Last Modified by GUIDE v2.5 22-Nov-2014 21:51:54
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -73,7 +73,10 @@ handles.a;
 handles.b;
 handles.r;
 handles.s;
-handles.x0=[1;2];
+handles.time=1;
+% Uwaga warunek początkowy jest tworzony w funkcjach kreujących slidery,
+% i dostajemy go w postaci wektora wierszowego, trzeba transponować.
+handles.x0=handles.x0';
 delta=4
 handles.da=delta;
 handles.db=delta;
@@ -87,6 +90,8 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
+%ustawienie czasu - nie działa
+%edit_time_Callback(hObject,eventdata,handles);
 
 % UIWAIT makes GUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -113,6 +118,7 @@ function sliderA_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.a=get(hObject,'Value');
 guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
 
 % --- Executes during object creation, after setting all properties.
 function sliderA_CreateFcn(hObject, eventdata, handles)
@@ -138,6 +144,7 @@ function sliderB_Callback(hObject, eventdata, handles)
 
 handles.b=get(hObject,'Value');
 guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
 
 % --- Executes during object creation, after setting all properties.
 function sliderB_CreateFcn(hObject, eventdata, handles)
@@ -162,7 +169,7 @@ function sliderS_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.s=get(hObject,'Value');
 guidata(hObject,handles);
-
+pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderS_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderS (see GCBO)
@@ -187,6 +194,7 @@ function sliderR_Callback(hObject, eventdata, handles)
 
 handles.r=get(hObject,'Value');
 guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderR_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderR (see GCBO)
@@ -209,6 +217,7 @@ function sliderV_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.x0(1)=get(hObject,'Value');
 guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderV_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderV (see GCBO)
@@ -219,7 +228,7 @@ function sliderV_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
-handles.xo(2)=get(hObject,'Value');
+handles.x0(1)=get(hObject,'Value');
 guidata(hObject,handles);
 
 % --- Executes on button press in pushbutton1.
@@ -235,7 +244,7 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % wszystko wraca do normy, albo wyskakuje błąd w konsolce, że ode45 nie
 % udało się dojść do wyniku ze względu na zły (zbyt duży) krok? Albo coś w
 % tym stylu
-tspan=linspace(0,1,100); %czas
+tspan=linspace(0,handles.time,100); %czas
 a=handles.a;
 b=handles.b;
 s=handles.s;
@@ -262,13 +271,17 @@ Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
 % Wynik dla danych zperturbowanych
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
 
-plot(handles.axes1,T,[Y,Y1]);
+%plot(handles.axes1,T,[Y,Y1]);
+plot(handles.axes1,T,Y(:,1),'g-',T,Y(:,2),'-b',T,Y1(:,1),'-.r',T,Y1(:,2),...
+    '--r');
 legend(handles.axes1,'V1','P1','Vconst','Pconst');
+title(handles.axes1,'Populacja w funkcji czasu');
 guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
 somenames={'a','b','s','r','V','P'}
 set(handles.axes2,'xticklabel',somenames);
-% disp s
+axis(handles.axes2,[0,7,0,20])
+% disp służy jako sprawdzenie czy program się nie zaciął, a zdaża mu się.
 disp('Gotowe');
 
 %%
@@ -282,7 +295,8 @@ function sliderP_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
-
+handles.x0(2)=get(hObject,'Value');
+guidata(hObject,handles);
 
 % --- Executes on slider movement.
 function sliderP_Callback(hObject, eventdata, handles)
@@ -294,3 +308,34 @@ function sliderP_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.x0(2)=get(hObject,'Value');
 guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
+
+
+
+function edit_time_Callback(hObject, eventdata, handles)
+% hObject    handle to edit_time (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit_time as text
+%        str2double(get(hObject,'String')) returns contents of edit_time as a double
+value=str2double(get(hObject,'String'));
+if isnan(value)
+    set(hObject,'String',num2str(handles.time));
+    return
+end
+handles.time=value
+guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
+
+% --- Executes during object creation, after setting all properties.
+function edit_time_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit_time (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
