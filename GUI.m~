@@ -73,9 +73,7 @@ handles.a;
 handles.b;
 handles.r;
 handles.s;
-% Uwaga warunek początkowy jest tworzony w funkcjach kreujących slidery,
-% i dostajemy go w postaci wektora wierszowego, trzeba transponować.
-handles.x0=handles.x0';
+handles.x0=[1;2];
 delta=4
 handles.da=delta;
 handles.db=delta;
@@ -221,7 +219,7 @@ function sliderV_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
-handles.x0(1)=get(hObject,'Value');
+handles.xo(2)=get(hObject,'Value');
 guidata(hObject,handles);
 
 % --- Executes on button press in pushbutton1.
@@ -270,7 +268,7 @@ guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
 somenames={'a','b','s','r','V','P'}
 set(handles.axes2,'xticklabel',somenames);
-% disp służy jako sprawdzenie czy program się nie zaciął, a zdaża mu się.
+% disp s
 disp('Gotowe');
 
 %%
@@ -284,8 +282,7 @@ function sliderP_CreateFcn(hObject, eventdata, handles)
 if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
-handles.x0(2)=get(hObject,'Value');
-guidata(hObject,handles);
+
 
 % --- Executes on slider movement.
 function sliderP_Callback(hObject, eventdata, handles)

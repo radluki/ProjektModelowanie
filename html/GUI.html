@@ -1,0 +1,644 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Aplikacja Ryby</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-11-22"><meta name="DC.source" content="GUI.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Aplikacja Ryby</h1><!--introduction--><p>Program rozwi&#261;zuje r&oacute;wnanie Lotki-Volterry, kt&oacute;re wykorzystali&#347;my do symulacji dw&oacute;ch populacji ryb, jednej drapie&#380;nej P i drugiej ofiar V.</p><p>R&oacute;wnanie opisuj&#261;ce system:</p><p><img src="GUI_eq60053.png" alt="$$ \dot V = rV - abVP $$"></p><p><img src="GUI_eq47195.png" alt="$$ \dot P = -sP +abVP $$"></p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#3">Deklaracje</a></li><li><a href="#7">Symulacja</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> varargout = GUI(varargin)
+<span class="comment">% GUI MATLAB code for GUI.fig</span>
+<span class="comment">%      GUI, by itself, creates a new GUI or raises the existing</span>
+<span class="comment">%      singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      H = GUI returns the handle to a new GUI or the handle to</span>
+<span class="comment">%      the existing singleton*.</span>
+<span class="comment">%</span>
+<span class="comment">%      GUI('CALLBACK',hObject,eventData,handles,...) calls the local</span>
+<span class="comment">%      function named CALLBACK in GUI.M with the given input arguments.</span>
+<span class="comment">%</span>
+<span class="comment">%      GUI('Property','Value',...) creates a new GUI or raises the</span>
+<span class="comment">%      existing singleton*.  Starting from the left, property value pairs are</span>
+<span class="comment">%      applied to the GUI before GUI_OpeningFcn gets called.  An</span>
+<span class="comment">%      unrecognized property name or invalid value makes property application</span>
+<span class="comment">%      stop.  All inputs are passed to GUI_OpeningFcn via varargin.</span>
+<span class="comment">%</span>
+<span class="comment">%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one</span>
+<span class="comment">%      instance to run (singleton)".</span>
+<span class="comment">%</span>
+<span class="comment">% See also: GUIDE, GUIDATA, GUIHANDLES</span>
+
+<span class="comment">% Edit the above text to modify the response to help GUI</span>
+
+<span class="comment">% Last Modified by GUIDE v2.5 22-Nov-2014 12:57:45</span>
+
+<span class="comment">% Begin initialization code - DO NOT EDIT</span>
+gui_Singleton = 1;
+gui_State = struct(<span class="string">'gui_Name'</span>,       mfilename, <span class="keyword">...</span>
+                   <span class="string">'gui_Singleton'</span>,  gui_Singleton, <span class="keyword">...</span>
+                   <span class="string">'gui_OpeningFcn'</span>, @GUI_OpeningFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_OutputFcn'</span>,  @GUI_OutputFcn, <span class="keyword">...</span>
+                   <span class="string">'gui_LayoutFcn'</span>,  [] , <span class="keyword">...</span>
+                   <span class="string">'gui_Callback'</span>,   []);
+<span class="keyword">if</span> nargin &amp;&amp; ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+<span class="keyword">end</span>
+
+<span class="keyword">if</span> nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">else</span>
+    gui_mainfcn(gui_State, varargin{:});
+<span class="keyword">end</span>
+<span class="comment">% End initialization code - DO NOT EDIT</span>
+
+
+<span class="comment">% --- Executes just before GUI is made visible.</span>
+<span class="keyword">function</span> GUI_OpeningFcn(hObject, eventdata, handles, varargin)
+</pre><pre class="codeinput"><span class="comment">% This function has no output args, see OutputFcn.</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+<span class="comment">% varargin   command line arguments to GUI (see VARARGIN)</span>
+</pre><h2>Deklaracje<a name="3"></a></h2><p>Tu nale&#380;y umie&#347;ci&#263; nowe pola struktury handles Warto&#347;ci do zadeklarowanych p&oacute;l s&#261; przypisywane przy tworzeniu slider&oacute;w. a,b,... oznaczaj&#261; warto&#347;ci parametr&oacute;w i powinny wy&#347;wietla&#263; te same warto&#347;ci co slidery da,db,... to niepewno&#347;ci, b&#261;d&#378; zaburzenia x0 warunki pocz&#261;tkowe</p><pre class="codeinput">handles.a;
+handles.b;
+handles.r;
+handles.s;
+<span class="comment">% Uwaga warunek pocz&#261;tkowy jest tworzony w funkcjach kreuj&#261;cych slidery,</span>
+<span class="comment">% i dostajemy go w postaci wektora wierszowego, trzeba transponowa&#263;.</span>
+handles.x0=handles.x0';
+delta=4
+handles.da=delta;
+handles.db=delta;
+handles.dr=delta;
+handles.ds=delta;
+handles.dx0=[delta;delta];
+</pre><pre class="codeoutput">
+delta =
+
+     4
+
+</pre><p>Choose default command line output for GUI</p><pre class="codeinput">handles.output = hObject;
+
+<span class="comment">% Update handles structure</span>
+guidata(hObject, handles);
+
+<span class="comment">% UIWAIT makes GUI wait for user response (see UIRESUME)</span>
+<span class="comment">% uiwait(handles.figure1);</span>
+
+
+<span class="comment">% --- Outputs from this function are returned to the command line.</span>
+</pre><pre class="codeinput"><span class="keyword">function</span> varargout = GUI_OutputFcn(hObject, eventdata, handles)
+<span class="comment">% varargout  cell array for returning output args (see VARARGOUT);</span>
+<span class="comment">% hObject    handle to figure</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Get default command line output from handles structure</span>
+varargout{1} = handles.output;
+
+
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderA_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderA (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+handles.a=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> sliderA_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderA (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.a=get(hObject,<span class="string">'Value'</span>)
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderB_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderB (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+
+handles.b=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> sliderB_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderB (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.b=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderS_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderS (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+handles.s=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> sliderS_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderS (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.s=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderR_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderR (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+
+handles.r=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> sliderR_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderR (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.r=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderV_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderV (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+handles.x0(1)=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+<span class="comment">% --- Executes during object creation, after setting all properties.</span>
+<span class="keyword">function</span> sliderV_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderV (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.x0(1)=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes on button press in pushbutton1.</span>
+<span class="keyword">function</span> pushbutton1_Callback(hObject, eventdata, handles)
+</pre><pre class="codeinput"><span class="comment">% hObject    handle to pushbutton1 (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+</pre><h2>Symulacja<a name="7"></a></h2><p>Przycisk powoduje wykonanie oblicze&#324; i aktualizowanie wykres&oacute;w. PROBLEM: Czasami przy pewnych warto&#347;ciach parametr&oacute;w solver si&#281; zacina, tzn. albo si&#281; zawiesza, ale gdy przeprowadzi si&#281; symulacj&#281; jeszcze raz wszystko wraca do normy, albo wyskakuje b&#322;&#261;d w konsolce, &#380;e ode45 nie uda&#322;o si&#281; doj&#347;&#263; do wyniku ze wzgl&#281;du na z&#322;y (zbyt du&#380;y) krok? Albo co&#347; w tym stylu</p><pre class="codeinput">tspan=linspace(0,1,100); <span class="comment">%czas</span>
+a=handles.a;
+b=handles.b;
+s=handles.s;
+r=handles.r;
+x0=handles.x0;
+<span class="comment">% powy&#380;ej przepisuj&#281; dane</span>
+<span class="comment">% licz&#281; wynik dla danych niezabu&#380;onych</span>
+[T1,Y1]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0)
+<span class="comment">% tworz&#281; tablic&#281; na poszczeg&oacute;lne parametry, tak &#380;eby mo&#380;na je by&#322;o</span>
+<span class="comment">% wy&#347;wietli&#263; w "bar"</span>
+Tablica_parametrow=[a; b; s; r;handles.x0];
+da=handles.da;
+db=handles.db;
+ds=handles.ds;
+dr=handles.dr;
+a=losuj_parametr(a,da);
+b=losuj_parametr(b,db);
+s=losuj_parametr(s,ds);
+r=losuj_parametr(r,dr);
+x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
+x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
+<span class="comment">% Do&#322;&#261;czam do tablicy parametry zperturbowane</span>
+Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
+<span class="comment">% Wynik dla danych zperturbowanych</span>
+[T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
+
+plot(handles.axes1,T,[Y,Y1]);
+legend(handles.axes1,<span class="string">'V1'</span>,<span class="string">'P1'</span>,<span class="string">'Vconst'</span>,<span class="string">'Pconst'</span>);
+guidata(hObject,handles);
+bar(handles.axes2,Tablica_parametrow);
+somenames={<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'s'</span>,<span class="string">'r'</span>,<span class="string">'V'</span>,<span class="string">'P'</span>}
+set(handles.axes2,<span class="string">'xticklabel'</span>,somenames);
+<span class="comment">% disp s&#322;u&#380;y jako sprawdzenie czy program si&#281; nie zaci&#261;&#322;, a zda&#380;a mu si&#281;.</span>
+disp(<span class="string">'Gotowe'</span>);
+</pre><p>--- Executes during object creation, after setting all properties.</p><pre class="codeinput"><span class="keyword">function</span> sliderP_CreateFcn(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderP (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    empty - handles not created until after all CreateFcns called</span>
+
+<span class="comment">% Hint: slider controls usually have a light gray background.</span>
+<span class="keyword">if</span> isequal(get(hObject,<span class="string">'BackgroundColor'</span>), get(0,<span class="string">'defaultUicontrolBackgroundColor'</span>))
+    set(hObject,<span class="string">'BackgroundColor'</span>,[.9 .9 .9]);
+<span class="keyword">end</span>
+handles.x0(2)=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+
+<span class="comment">% --- Executes on slider movement.</span>
+<span class="keyword">function</span> sliderP_Callback(hObject, eventdata, handles)
+<span class="comment">% hObject    handle to sliderP (see GCBO)</span>
+<span class="comment">% eventdata  reserved - to be defined in a future version of MATLAB</span>
+<span class="comment">% handles    structure with handles and user data (see GUIDATA)</span>
+
+<span class="comment">% Hints: get(hObject,'Value') returns position of slider</span>
+<span class="comment">%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider</span>
+handles.x0(2)=get(hObject,<span class="string">'Value'</span>);
+guidata(hObject,handles);
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Aplikacja Ryby
+% Program rozwiązuje równanie Lotki-Volterry, które wykorzystaliśmy do
+% symulacji dwóch populacji ryb, jednej drapieżnej P i drugiej ofiar V.
+% 
+% Równanie opisujące system:  
+%
+% $$ \dot V = rV - abVP $$ 
+%
+% $$ \dot P = -sP +abVP $$ 
+%%
+
+function varargout = GUI(varargin)
+% GUI MATLAB code for GUI.fig
+%      GUI, by itself, creates a new GUI or raises the existing
+%      singleton*.
+%
+%      H = GUI returns the handle to a new GUI or the handle to
+%      the existing singleton*.
+%
+%      GUI('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in GUI.M with the given input arguments.
+%
+%      GUI('Property','Value',...) creates a new GUI or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before GUI_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to GUI_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help GUI
+
+% Last Modified by GUIDE v2.5 22-Nov-2014 12:57:45
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @GUI_OpeningFcn, ...
+                   'gui_OutputFcn',  @GUI_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+% End initialization code - DO NOT EDIT
+
+
+% REPLACE_WITH_DASH_DASH- Executes just before GUI is made visible.
+function GUI_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to GUI (see VARARGIN)
+%% Deklaracje
+% Tu należy umieścić nowe pola struktury handles
+% Wartości do zadeklarowanych pól są przypisywane przy tworzeniu sliderów.
+% a,b,... oznaczają wartości parametrów i powinny wyświetlać te same
+% wartości co slidery
+% da,db,... to niepewności, bądź zaburzenia
+% x0 warunki początkowe
+handles.a;
+handles.b;
+handles.r;
+handles.s;
+% Uwaga warunek początkowy jest tworzony w funkcjach kreujących slidery,
+% i dostajemy go w postaci wektora wierszowego, trzeba transponować.
+handles.x0=handles.x0';
+delta=4
+handles.da=delta;
+handles.db=delta;
+handles.dr=delta;
+handles.ds=delta;
+handles.dx0=[delta;delta];
+
+%%
+% Choose default command line output for GUI
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes GUI wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+
+
+% REPLACE_WITH_DASH_DASH- Outputs from this function are returned to the command line.
+function varargout = GUI_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderA_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderA (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.a=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderA_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderA (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.a=get(hObject,'Value')
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderB_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderB (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+handles.b=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderB_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderB (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.b=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderS_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderS (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.s=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderS_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderS (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.s=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderR_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderR (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+handles.r=get(hObject,'Value');
+guidata(hObject,handles);
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderR_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderR (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.r=get(hObject,'Value');
+guidata(hObject,handles);
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderV_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderV (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.x0(1)=get(hObject,'Value');
+guidata(hObject,handles);
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderV_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderV (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.x0(1)=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes on button press in pushbutton1.
+function pushbutton1_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+%% Symulacja
+% Przycisk powoduje wykonanie obliczeń i aktualizowanie wykresów.
+% PROBLEM: Czasami przy pewnych wartościach parametrów solver się zacina,
+% tzn. albo się zawiesza, ale gdy przeprowadzi się symulację jeszcze raz
+% wszystko wraca do normy, albo wyskakuje błąd w konsolce, że ode45 nie
+% udało się dojść do wyniku ze względu na zły (zbyt duży) krok? Albo coś w
+% tym stylu
+tspan=linspace(0,1,100); %czas
+a=handles.a;
+b=handles.b;
+s=handles.s;
+r=handles.r;
+x0=handles.x0;
+% powyżej przepisuję dane
+% liczę wynik dla danych niezabużonych
+[T1,Y1]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0)
+% tworzę tablicę na poszczególne parametry, tak żeby można je było
+% wyświetlić w "bar"
+Tablica_parametrow=[a; b; s; r;handles.x0];
+da=handles.da;
+db=handles.db;
+ds=handles.ds;
+dr=handles.dr;
+a=losuj_parametr(a,da);
+b=losuj_parametr(b,db);
+s=losuj_parametr(s,ds);
+r=losuj_parametr(r,dr);
+x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
+x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
+% Dołączam do tablicy parametry zperturbowane
+Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
+% Wynik dla danych zperturbowanych
+[T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
+
+plot(handles.axes1,T,[Y,Y1]);
+legend(handles.axes1,'V1','P1','Vconst','Pconst');
+guidata(hObject,handles);
+bar(handles.axes2,Tablica_parametrow);
+somenames={'a','b','s','r','V','P'}
+set(handles.axes2,'xticklabel',somenames);
+% disp służy jako sprawdzenie czy program się nie zaciął, a zdaża mu się.
+disp('Gotowe');
+
+%%
+% REPLACE_WITH_DASH_DASH- Executes during object creation, after setting all properties.
+function sliderP_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to sliderP (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+handles.x0(2)=get(hObject,'Value');
+guidata(hObject,handles);
+
+% REPLACE_WITH_DASH_DASH- Executes on slider movement.
+function sliderP_Callback(hObject, eventdata, handles)
+% hObject    handle to sliderP (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+handles.x0(2)=get(hObject,'Value');
+guidata(hObject,handles);
+
+##### SOURCE END #####
+--></body></html>
