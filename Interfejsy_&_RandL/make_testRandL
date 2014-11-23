@@ -8,4 +8,4 @@ testRandL.o: testRandL.cpp
 RandL.o: RandL.h RandL.cpp 
 	g++ RandL.cpp -c
 clear:
-	rm *.o
+	rm *.o *~
