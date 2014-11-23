@@ -7,4 +7,4 @@ blum_blum.o: blum_generator.cpp
 test.o:
 	g++ test.cpp -std=c++11 -c
 clear:
-	./remove_trash *.o *~
+	rm *.o *~
