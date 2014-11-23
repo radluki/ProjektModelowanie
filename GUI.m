@@ -274,6 +274,7 @@ Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
 %plot(handles.axes1,T,[Y,Y1]);
 plot(handles.axes1,T,Y(:,1),'g-',T,Y(:,2),'-b',T,Y1(:,1),'-.r',T,Y1(:,2),...
     '--r');
+axis(handles.axes1,[0,handles.time,0,10]);
 legend(handles.axes1,'V1','P1','Vconst','Pconst');
 title(handles.axes1,'Populacja w funkcji czasu');
 guidata(hObject,handles);
