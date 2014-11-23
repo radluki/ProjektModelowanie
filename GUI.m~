@@ -284,7 +284,6 @@ legend(handles.axes1,'V1','P1','Vconst','Pconst');
 title(handles.axes1,'Populacja w funkcji czasu');
 guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
-grid on;
 somenames={'a','b','s','r','V','P'};
 set(handles.axes2,'xticklabel',somenames);
 axis(handles.axes2,[0,7,0,20])
@@ -365,7 +364,7 @@ function sliderOY_Callback(hObject, eventdata, handles)
 handles.ymax=get(hObject,'Value');
 set(handles.editOY,'String',num2str(handles.ymax));
 guidata(hObject,handles);
-pushbutton1_Callback(hObject,eventdata,handles);
+
 % --- Executes during object creation, after setting all properties.
 function sliderOY_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderOY (see GCBO)
@@ -415,13 +414,7 @@ function editOY_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of editOY as a double
 value=str2double(get(hObject,'String'));
 if isnan(value)
-    set(hObject,'String',num2str(handles.ymax));
-    return;
-end
-handles.ymax=value;
-set(handles.sliderOY,'Value',value);
-guidata(hObject,handles);
-pushbutton1_Callback(hObject,eventdata,handles);
+    set(hObject,'String',num2str(handles.maxy));
 
 % --- Executes during object creation, after setting all properties.
 function editOY_CreateFcn(hObject, eventdata, handles)
