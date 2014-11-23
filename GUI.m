@@ -244,7 +244,11 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % wszystko wraca do normy, albo wyskakuje błąd w konsolce, że ode45 nie
 % udało się dojść do wyniku ze względu na zły (zbyt duży) krok? Albo coś w
 % tym stylu
-tspan=linspace(0,handles.time,100); %czas
+%przed zmiana:
+%tspan=linspace(0,handles.time,100); %czas
+%zmienilem tspan na wektor dwuelementowy oznaczajacy koniec i poczatek, aby
+%solver sam dobral sobie punkty posrednie adekwatne do przyjetego skoku
+tspan=[0 handles.time];
 a=handles.a;
 b=handles.b;
 s=handles.s;
@@ -272,7 +276,7 @@ Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]]
 [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0);
 
 %plot(handles.axes1,T,[Y,Y1]);
-plot(handles.axes1,T,Y(:,1),'g-',T,Y(:,2),'-b',T,Y1(:,1),'-.r',T,Y1(:,2),...
+plot(handles.axes1,T,Y(:,1),'g-',T,Y(:,2),'-b',T1,Y1(:,1),'-.r',T1,Y1(:,2),...
     '--r');
 legend(handles.axes1,'V1','P1','Vconst','Pconst');
 title(handles.axes1,'Populacja w funkcji czasu');
