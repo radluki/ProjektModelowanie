@@ -1,0 +1,10 @@
+#!/bin/bash
+# Skrypt usuwa pliki które się wskaże, jeśli pliki nie istnieją nie wyświetla komunikatu o błędzie
+# Napisałem, żeby skorzystać w makefilach 
+while [ "$1" != "" ]; do
+	
+	if [ -f "$1" ]; then 
+		rm $1;
+	fi 
+    	shift
+done
