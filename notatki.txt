@@ -1,0 +1,4 @@
+%% Moje notatki
+% a=cell(2,32,1)
+% [x,x1]=a{} 
+% x= a() -jedno wyjście

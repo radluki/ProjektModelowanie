@@ -33,7 +33,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 24-Nov-2014 21:31:20
+% Last Modified by GUIDE v2.5 24-Nov-2014 23:21:38
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -471,9 +471,26 @@ guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 
 
+% --------------------------------------------------------------------
+function menu_label_Callback(hObject, eventdata, handles)
+% hObject    handle to menu_label (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
 
+% --------------------------------------------------------------------
+function seve_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to seve (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
 
-
-
-
+% uiputfile wyświetla okienko z którego otrzymać można ścieżkę
+% trzeba pobrać 2 wartości
+% [a,b]=uiputfile
+% strcat(a,b) to ścieżka
+[name,path]=uiputfile
+a=figure
+t=linspace(1,2*pi,1000);
+plot(t,sin(t));
+saveas(figure(a),strcat(path,name,'.png'));
+close(figure(a));

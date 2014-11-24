@@ -447,6 +447,8 @@ function uitable2_CellEditCallback(hObject, eventdata, handles)
 %	Error: error string when failed to convert EditData to appropriate value for Data
 % handles    structure with handles and user data (see GUIDATA)
 
+
+% FAJNY KOD NA PODSTAWIE NIEGO MOŻNA BUDOWAĆ WIĘKSZE ŻECZY
 data=get(hObject,'Data');
 Ind = eventdata.Indices;
 previous=eventdata.PreviousData;
