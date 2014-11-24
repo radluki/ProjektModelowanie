@@ -2,10 +2,11 @@ function [T,Y]=rozwiaz_z_parametrami(r,a,s,b,tspan,x0)
 %% ROZWIAZ_Z_PARAMETRAMI(r,a,s,b,tspan,x0) - rozwiązuje równanie Lotki-Volterry
 
 %% Modelowane równania
-% $$ \dot V = rV - abVP $$ 
+% $$ \dot V = rV - aVP $$ 
 %
 % $$ \dot P = -sP +abVP $$ 
-
+%
+% V - ofiara, P - drapieżnik
 f=@(r,a,s,b,V,P) [r*V-a*V*P; -s*P+a*b*V*P];
 
 %% Rozwiązanie

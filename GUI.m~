@@ -33,7 +33,7 @@ function varargout = GUI(varargin)
 
 % Edit the above text to modify the response to help GUI
 
-% Last Modified by GUIDE v2.5 23-Nov-2014 18:33:45
+% Last Modified by GUIDE v2.5 24-Nov-2014 21:31:20
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -284,6 +284,7 @@ legend(handles.axes1,'V1','P1','Vconst','Pconst');
 title(handles.axes1,'Populacja w funkcji czasu');
 guidata(hObject,handles);
 bar(handles.axes2,Tablica_parametrow);
+grid on;
 somenames={'a','b','s','r','V','P'};
 set(handles.axes2,'xticklabel',somenames);
 axis(handles.axes2,[0,7,0,20])
@@ -364,7 +365,7 @@ function sliderOY_Callback(hObject, eventdata, handles)
 handles.ymax=get(hObject,'Value');
 set(handles.editOY,'String',num2str(handles.ymax));
 guidata(hObject,handles);
-
+pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
 function sliderOY_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderOY (see GCBO)
@@ -414,7 +415,13 @@ function editOY_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of editOY as a double
 value=str2double(get(hObject,'String'));
 if isnan(value)
-    set(hObject,'String',num2str(handles.maxy));
+    set(hObject,'String',num2str(handles.ymax));
+    return;
+end
+handles.ymax=value;
+set(handles.sliderOY,'Value',value);
+guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
 
 % --- Executes during object creation, after setting all properties.
 function editOY_CreateFcn(hObject, eventdata, handles)
@@ -427,3 +434,41 @@ function editOY_CreateFcn(hObject, eventdata, handles)
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
     set(hObject,'BackgroundColor','white');
 end
+
+
+% --- Executes when entered data in editable cell(s) in uitable2.
+function uitable2_CellEditCallback(hObject, eventdata, handles)
+% hObject    handle to uitable2 (see GCBO)
+% eventdata  structure with the following fields (see UITABLE)
+%	Indices: row and column indices of the cell(s) edited
+%	PreviousData: previous data for the cell(s) edited
+%	EditData: string(s) entered by the user
+%	NewData: EditData or its converted form set on the Data property. Empty if Data was not changed
+%	Error: error string when failed to convert EditData to appropriate value for Data
+% handles    structure with handles and user data (see GUIDATA)
+
+data=get(hObject,'Data');
+Ind = eventdata.Indices;
+previous=eventdata.PreviousData;
+if isnan(str2double(eventdata.EditData))
+    % JEŻELI PRZYPISUJESZ COŚ DO CELL TO W BRACE'ACH
+    data{Ind(1),Ind(2)}=previous;
+    set(hObject,'Data',data);
+end
+
+RowName=get(hObject,'RowName')
+if Ind(1)<5
+   command=strcat('handles.',RowName{Ind(1)},'=',eventdata.EditData);
+   eval(command);
+   command=strcat('handle
+end
+guidata(hObject,handles);
+pushbutton1_Callback(hObject,eventdata,handles);
+
+
+
+
+
+
+
+
