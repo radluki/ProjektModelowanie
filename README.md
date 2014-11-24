@@ -15,6 +15,7 @@ Wpiszcie tutaj zadania dotyczące GENERATORÓW do których się zobowiązujecie.
 
 ###### Ignacy:
   -squeeze test
+  
   -interfejs w QT
 
 ###### Maciek:
