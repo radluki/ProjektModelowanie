@@ -1,5 +1,0 @@
-function [fun,names,default_values] = model1()
-
-fun = @(param) [param(3)-param(2);param(1)*param(2)];
-names={'a','b','c'}
-default_values={
