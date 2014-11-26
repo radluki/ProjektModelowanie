@@ -173,7 +173,7 @@ function sliderS_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.s=get(hObject,'Value');
-handles.data(3, 1)=handles.s;
+handles.data(4, 1)=handles.s;
 set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
@@ -201,7 +201,7 @@ function sliderR_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 handles.r=get(hObject,'Value');
-handles.data(4, 1)=handles.r;
+handles.data(3, 1)=handles.r;
 set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
