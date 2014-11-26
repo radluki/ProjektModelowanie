@@ -73,8 +73,8 @@ handles.a;
 handles.b;
 handles.r;
 handles.s;
-handles.time=1;
-handles.ymax=1;
+handles.time=20;
+handles.ymax=20;
 % Uwaga warunek początkowy jest tworzony w funkcjach kreujących slidery,
 % i dostajemy go w postaci wektora wierszowego, trzeba transponować.
 handles.x0=handles.x0';
@@ -118,6 +118,8 @@ function sliderA_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.a=get(hObject,'Value');
+handles.data(1, 1)=handles.a;
+set(handles.uitable2, 'Data', handles.data)
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 
@@ -144,6 +146,8 @@ function sliderB_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 handles.b=get(hObject,'Value');
+handles.data(2, 1)=handles.b;
+set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 
@@ -169,8 +173,11 @@ function sliderS_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.s=get(hObject,'Value');
+handles.data(3, 1)=handles.s;
+set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
+
 % --- Executes during object creation, after setting all properties.
 function sliderS_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderS (see GCBO)
@@ -194,8 +201,11 @@ function sliderR_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 
 handles.r=get(hObject,'Value');
+handles.data(4, 1)=handles.r;
+set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
+
 % --- Executes during object creation, after setting all properties.
 function sliderR_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderR (see GCBO)
@@ -208,6 +218,7 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
 end
 handles.r=get(hObject,'Value');
 guidata(hObject,handles);
+
 % --- Executes on slider movement.
 function sliderV_Callback(hObject, eventdata, handles)
 % hObject    handle to sliderV (see GCBO)
@@ -217,6 +228,8 @@ function sliderV_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.x0(1)=get(hObject,'Value');
+handles.data(5, 1)=handles.x0(1);
+set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
@@ -316,6 +329,8 @@ function sliderP_Callback(hObject, eventdata, handles)
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 handles.x0(2)=get(hObject,'Value');
+handles.data(6, 1)=handles.x0(2);
+set(handles.uitable2, 'Data', handles.data);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 
@@ -449,12 +464,12 @@ function uitable2_CellEditCallback(hObject, eventdata, handles)
 %	Error: error string when failed to convert EditData to appropriate value for Data
 % handles    structure with handles and user data (see GUIDATA)
 
-data=get(hObject,'Data');
+handles.data=get(hObject,'Data');
 Ind = eventdata.Indices;
 previous=eventdata.PreviousData;
 if isnan(str2double(eventdata.EditData))
     % JEŻELI PRZYPISUJESZ COŚ DO CELL TO W BRACE'ACH
-    data{Ind(1),Ind(2)}=previous;
+    handles.data{Ind(1),Ind(2)}=previous;
     set(hObject,'Data',data);
 end
 
