@@ -78,7 +78,7 @@ handles.ymax=1;
 % Uwaga warunek początkowy jest tworzony w funkcjach kreujących slidery,
 % i dostajemy go w postaci wektora wierszowego, trzeba transponować.
 handles.x0=handles.x0';
-delta=4;
+delta=10;
 handles.da=delta;
 handles.db=delta;
 handles.dr=delta;
@@ -220,6 +220,7 @@ handles.x0(1)=get(hObject,'Value');
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
 % --- Executes during object creation, after setting all properties.
+
 function sliderV_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderV (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -265,12 +266,13 @@ da=handles.da;
 db=handles.db;
 ds=handles.ds;
 dr=handles.dr;
-a=losuj_parametr(a,da);
-b=losuj_parametr(b,db);
-s=losuj_parametr(s,ds);
-r=losuj_parametr(r,dr);
-x0(1)=losuj_parametr(handles.x0(1),handles.dx0(1));
-x0(2)=losuj_parametr(handles.x0(2),handles.dx0(2));
+a=losuj_parametr(a,(da/100)*a);
+b=losuj_parametr(b,(db/100)*b);
+s=losuj_parametr(s,(ds/100)*s);
+r=losuj_parametr(r,(dr/100)*r);
+x0(1)=losuj_parametr(handles.x0(1),(handles.dx0(1)/100)*handles.x0(1));
+x0(2)=losuj_parametr(handles.x0(2),(handles.dx0(2)/100)*handles.x0(2));
+% Blad wzgledny
 % Dołączam do tablicy parametry zperturbowane
 Tablica_parametrow=[Tablica_parametrow  [a; b; s; r;x0(1);x0(2)]];
 % Wynik dla danych zperturbowanych
@@ -349,7 +351,7 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
 end
 
 % Nie wiem czy tak można ale dla sliderów działa
-% Chyba nie działa, NIE DZIAŁA, należy unikać inicjalizacji zmiennych w
+% Chyba nie działa, NIE DZIA�?A, należy unikać inicjalizacji zmiennych w
 % creatach
 %handles.ymax=get(hObject,'Value');
 %guidata(hObject,handles);
@@ -462,13 +464,29 @@ if Ind(1)<5
     if Ind(2)==1
         command=strcat('handles.',command);
         eval(command);
-    elseif Ind(2)==2
+    else
         command=strcat('handles.d',command);
+        eval(command);
     end
-
+elseif Ind(1)==5
+    if Ind(2)==1
+        handles.x0(1)=str2double(eventdata.EditData);
+        set(handles.sliderV, 'Value', handles.x0(1));
+    else
+        handles.dx0(1)=str2double(eventdata.EditData);
+    end
+else
+    if Ind(2)==1
+        handles.x0(2)=str2double(eventdata.EditData);
+        set(handles.sliderP, 'Value', handles.x0(2));
+    else
+        handles.dx0(2)=str2double(eventdata.EditData);
+    end 
 end
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
+% Dodalem mozliwosc ustawiania bledu wzglednego w tablicy.
+% Slidery wartosci poczatkowych ustawiaja sie po zmianie w tablicy.
 
 
 % --------------------------------------------------------------------
