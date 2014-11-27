@@ -15,10 +15,10 @@
 class Generator
 {
 public:
-	virtual double losujLiczbe()=0;
-	virtual std::vector<double> losujTablice(int n)=0;
-	virtual void setSeed(double newSeed)=0;
 	virtual ~Generator(){};
+	virtual int losujLiczbe()=0;
+	virtual std::vector<int> losujTablice(int n)=0;
+	virtual void setSeed(long long newSeed)=0;
 };
 
 #endif //GENERATOR_ABS

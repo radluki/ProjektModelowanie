@@ -29,28 +29,28 @@ public:
 
     RandomGen(){};
     ~RandomGen(){};
-    virtual double losujLiczbe();
-	virtual std::vector<double> losujTablice(int n);
-	virtual void setSeed(double newSeed);
+    virtual int losujLiczbe();
+	virtual std::vector<int> losujTablice(int n);
+	virtual void setSeed(long long newSeed);
 };
 template <class G>
-double RandomGen<G>::losujLiczbe()
+int RandomGen<G>::losujLiczbe()
 {
-    double i=generator(),p=generator.max();
-    return (i/p);
+    unsigned int i=generator();
+    return (int)(i%16777216);
 }
 template <class G>
-std::vector<double> RandomGen<G>::losujTablice(int n)
+std::vector<int> RandomGen<G>::losujTablice(int n)
 {
-    std::vector<double> vec(n);
-    for(int i=0; i<vec.size(); i++) vec[i]=(double)losujLiczbe();
+    std::vector<int> vec(n);
+    for(int i=0; i<vec.size(); i++) vec[i]=losujLiczbe();
     return vec;
 }
 template <class G>
-void RandomGen<G>::setSeed(double newSeed)
+void RandomGen<G>::setSeed(long long newSeed)
 {
     generator.seed(newSeed);
 }
 template <>   //klasa random_device nie ma seeda
-void RandomGen<std::random_device>::setSeed(double newSeed){}
+void RandomGen<std::random_device>::setSeed(long long newSeed){}
 #endif // RANLUX24
