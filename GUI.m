@@ -421,8 +421,6 @@ if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColo
     set(hObject,'BackgroundColor',[.9 .9 .9]);
 end
 
-
-
 function editOY_Callback(hObject, eventdata, handles)
 % hObject    handle to editOY (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -472,31 +470,122 @@ if isnan(str2double(eventdata.EditData))
     handles.data{Ind(1),Ind(2)}=previous;
     set(hObject,'Data',data);
 end
-
-RowName=get(hObject,'RowName')
-if Ind(1)<5
-    command=strcat(RowName{Ind(1)},'=',eventdata.EditData);
-    if Ind(2)==1
-        command=strcat('handles.',command);
-        eval(command);
-    else
-        command=strcat('handles.d',command);
-        eval(command);
-    end
-elseif Ind(1)==5
-    if Ind(2)==1
-        handles.x0(1)=str2double(eventdata.EditData);
-        set(handles.sliderV, 'Value', handles.x0(1));
-    else
-        handles.dx0(1)=str2double(eventdata.EditData);
-    end
-else
-    if Ind(2)==1
-        handles.x0(2)=str2double(eventdata.EditData);
-        set(handles.sliderP, 'Value', handles.x0(2));
-    else
-        handles.dx0(2)=str2double(eventdata.EditData);
-    end 
+temp=str2double(eventdata.EditData);
+switch Ind(1)
+    case 1
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>1
+                temp=1;
+            end
+            handles.a=temp;
+            handles.data(1,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderA, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.da=temp;
+            handles.data(1,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
+    case 2
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>1
+                temp=1;
+            end
+            handles.b=temp;
+            handles.data(2,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderB, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.db=temp;
+            handles.data(2,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
+    case 3
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>1
+                temp=1;
+            end
+            handles.r=temp;
+            handles.data(3,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderR, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.dr=temp;
+            handles.data(3,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
+    case 4
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>1
+                temp=1;
+            end
+            handles.s=temp;
+            handles.data(4,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderS, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.ds=temp;
+            handles.data(4,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
+    case 5
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>20
+                temp=20;
+            end
+            handles.x0(1)=temp;
+            handles.data(5,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderV, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.dx0(1)=temp;
+            handles.data(5,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
+    otherwise
+        if Ind(2)==1
+            if temp<0
+                temp=0;
+            elseif temp>20
+                temp=20;
+            end
+            handles.x0(2)=temp;
+            handles.data(6,1)=num2cell(temp);
+            set(hObject, 'Data', handles.data);
+            set(handles.sliderP, 'Value', temp);
+        else
+            if temp<0
+                temp=0;
+            end
+            handles.dx0(2)=temp;
+            handles.data(6,2)=num2cell(temp);
+            set(hObject,'Data',handles.data);
+        end
 end
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
