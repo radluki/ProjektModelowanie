@@ -14,6 +14,11 @@
 			<Item Name="Kasy.ctl" Type="VI" URL="../ModelowanieLABVIEW_copy/Kasy.ctl"/>
 			<Item Name="LukiBrary.lvlib" Type="Library" URL="../ModelowanieLABVIEW_copy/LukiBrary.lvlib"/>
 		</Item>
+		<Item Name="Maszyna stanowa" Type="Folder">
+			<Item Name="event.ctl" Type="VI" URL="../event.ctl"/>
+			<Item Name="generuj_eventy.vi" Type="VI" URL="../generuj_eventy.vi"/>
+			<Item Name="maszyna stanowa 1.vi" Type="VI" URL="../maszyna stanowa 1.vi"/>
+		</Item>
 		<Item Name="new Vi&apos;s" Type="Folder">
 			<Item Name="generate_population2.vi" Type="VI" URL="../ModelowanieLABVIEW_copy/generate_population2.vi"/>
 			<Item Name="xxxx.vi" Type="VI" URL="../xxxx.vi"/>
@@ -26,6 +31,9 @@
 		<Item Name="vi&apos;s" Type="Folder">
 			<Item Name="main&apos;.vi" Type="VI" URL="../main&apos;.vi"/>
 		</Item>
+		<Item Name="array_test.vi" Type="VI" URL="../array_test.vi"/>
+		<Item Name="program glowny.vi" Type="VI" URL="../program glowny.vi"/>
+		<Item Name="sklep.ctl" Type="VI" URL="../sklep.ctl"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="NI_AALBase.lvlib" Type="Library" URL="/&lt;vilib&gt;/Analysis/NI_AALBase.lvlib"/>
