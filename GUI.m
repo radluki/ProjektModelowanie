@@ -298,11 +298,16 @@ axis(handles.axes1,[0,handles.time,0,handles.ymax]);
 legend(handles.axes1,'V1','P1','Vconst','Pconst');
 title(handles.axes1,'Populacja w funkcji czasu');
 guidata(hObject,handles);
-bar(handles.axes2,Tablica_parametrow);
-grid on;
-somenames={'a','b','s','r','V','P'};
+bar(handles.axes2,Tablica_parametrow(1:4,:));
+somenames={'a','b','s','r'};
 set(handles.axes2,'xticklabel',somenames);
-axis(handles.axes2,[0,7,0,20])
+axis(handles.axes2,[0,5,0,1])
+grid(handles.axes2, 'on');
+bar(handles.axes3,Tablica_parametrow(5:6,:));
+names={'V','P'};
+set(handles.axes3,'xticklabel',names);
+axis(handles.axes3,[0,3,0,20]);
+grid(handles.axes3, 'on');
 % disp służy jako sprawdzenie czy program się nie zaciął, a zdaża mu się.
 disp('Gotowe');
 
@@ -348,7 +353,14 @@ if isnan(value)
     set(hObject,'String',num2str(handles.time));
     return
 end
-handles.time=value
+if value<=0
+    value=0.001;
+    set(hObject,'String',num2str(0.001));
+elseif value>40
+    value=40;
+    set(hObject,'String',num2str(40));
+end
+handles.time=value;
 set(handles.slider_time,'Value',handles.time);
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
@@ -383,6 +395,7 @@ handles.ymax=get(hObject,'Value');
 set(handles.editOY,'String',num2str(handles.ymax));
 guidata(hObject,handles);
 pushbutton1_Callback(hObject,eventdata,handles);
+
 % --- Executes during object creation, after setting all properties.
 function sliderOY_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to sliderOY (see GCBO)
@@ -432,6 +445,13 @@ value=str2double(get(hObject,'String'));
 if isnan(value)
     set(hObject,'String',num2str(handles.ymax));
     return;
+end
+if value<=0
+    value=0.001;
+    set(hObject,'String',num2str(0.001));
+elseif value>40
+    value=40;
+    set(hObject,'String',num2str(40));
 end
 handles.ymax=value;
 set(handles.sliderOY,'Value',value);
