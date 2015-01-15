@@ -1,4 +1,5 @@
-//Fibonacci_main.cpp Prosty test generatora Fibonacciego - Marcin
+
+
 
 #include "Fibonacci.h"
 #include <iostream>
@@ -12,6 +13,8 @@ using namespace std;
 void zapiszdopliku(unsigned int *w,string nazwa);
 void odczytpliku(unsigned int *w,string nazwa,int *tab);
 void zamien_na_4bity( unsigned int *ww,unsigned int *aa);
+bool spr_tablice_jedynek(int *tab);
+bool testujblum_blum();
 //int ilosc_zer(const vector<long> &w);
 int ilosc_zer(unsigned int *w,int *tab_liczb);
 	
@@ -20,92 +23,6 @@ string bin[16]={"0000","0001","0010","0011","0100","0101","0110","0111","1000","
 ofstream PLIK;
 ifstream PLIK1;
 int tablicajedynek[7];
-
-int main(void)
-{
-	
-	unsigned long long suma = 0;
-	int temp;
-	unsigned int a[1000];
-	unsigned int nowa[5000];
-	unsigned int operacje = 1000; //ilosc testowanych liczb
-	//Fibonacci generator(1048575); //mozna okreslic tu wartosc maksymalna jako argument
-	Blum_Generator generator;
-	int R=0;
-	for(int j=0;j<100;j++)
-	{
-		
-	for (unsigned int i = 0; i < operacje; i++) //obliczamy srednia liczb
-	{
-		a[i] = generator.losujLiczbe();
-		suma += a[i];
-	}
-	int average = suma / operacje;
-//	std::cout << "Srednia wylosowanych liczb wynosi " << average << ".\n";
-//	std::cout << "Powinna wynosic: " << 1048576 / 2 << ".\n";
-
-	zamien_na_4bity(a,nowa);
-
-//	for(int i=0;i<50;i++)
-//	{
-//		cout<<nowa[i]<<"\t"<<a[i]<<"\n";	}
-//	
-//	cout<<"ilosc zer =\t"<<ilosc_zer(nowa,tab_liczb)<<"\n";
-	double x=0;
-	for(int i=0;i<16;i++)
-	{
-	//	cout<<tab_liczb[i]<<"\n";
-		x=x+tab_liczb[i]*tab_liczb[i];
-	}
-	x=16*x/5000-5000;	
-	if((2.16<x<46.17)&&(9725<ilosc_zer(nowa,tab_liczb)<10275))
-	R++;	
-	}
-	/*
-	for (unsigned int i = 0; i < operacje; i++) //obliczamy srednia liczb
-	{
-		a[i] = generator.losujLiczbe();
-		suma += a[i];
-	}
-	int average = suma / operacje;
-	std::cout << "Srednia wylosowanych liczb wynosi " << average << ".\n";
-	std::cout << "Powinna wynosic: " << 1048576 / 2 << ".\n";
-
-	unsigned int nowa[5000];
-	zamien_na_4bity(a,nowa);
-
-	for(int i=0;i<50;i++)
-	{
-		cout<<nowa[i]<<"\t"<<a[i]<<"\n";	}
-	
-	cout<<"ilosc zer =\t"<<ilosc_zer(nowa,tab_liczb)<<"\n";
-	double x=0;
-	for(int i=0;i<16;i++)
-	{
-		cout<<tab_liczb[i]<<"\n";
-		x=x+tab_liczb[i]*tab_liczb[i];
-	}
-	x=16*x/5000-5000;
-	*/
-	//cout<<"x=\t"<<x<<"\n";
-	cout<<"R=\t"<<R<<"\n";
-	cout<<"zapisywanie do pliku\n";
-	string nazwa;
-		cout<<"podaj nazwe pliku\n";
-		cin>>nazwa;
-	zapiszdopliku(nowa,nazwa);
-	
-	odczytpliku(nowa,nazwa,tablicajedynek);
-	cout<<"tablica z podciagami jedynek\n";
-	for(int i=1;i<7;i++)
-	{
-		cout<<tablicajedynek[i]<<"\n";
-	}
-	if(tablicajedynek[0]==-1)
-	cout<<"blad 26 lub wiecej jedynek w ciagu\n";
-	return 0;
-}
-
 
 void zamien_na_4bity(unsigned int *wzor,unsigned int *nowa){
 	
@@ -197,7 +114,7 @@ void odczytpliku(unsigned int *w,string nazwa,int *tab)
 		{
 			if(ile>=1&&ile<6)
 			tab[ile]=tab[ile]+1;
-			else if (ile>=6)
+			else if (ile>=6&&ile<26)
 			tab[6]+=1;
 			if(ile>=26)
 			tab[0]=-1;
@@ -208,6 +125,100 @@ void odczytpliku(unsigned int *w,string nazwa,int *tab)
 	}
 	PLIK1.close();
 }
+bool spr_tablice_jedynek(int *tab)
+{
+	int t=0;
+	if(tab[0]==-1)
+	{
+		cout<<"\n\tblad 26 lub wiecej jedynek w ciagu\n";
+		t--;	
+	}
+	else if((tab[1]<2343)||(tab[1]>2657))
+	{
+		cout<<"tab[1] "<<tab[1]<<"\n";
+		t--;
+	}
+
+	else if((tab[2]<1135)||(tab[2]>1365))
+	{
+		cout<<"tab[2] "<<tab[2]<<"\n";
+		t--;
+	}
+	else if((tab[3]<542)||(tab[3]>708))
+	{
+		cout<<"tab[3] "<<tab[3]<<"\n";
+		t--;
+	}
+	else if((tab[4]<251)||(tab[4]>373))
+	{
+		cout<<"tab[4] "<<tab[4]<<"\n";
+		t--;
+	}
+	else if((tab[5]<111)||(tab[5]>201))
+	{
+		cout<<"tab[5] "<<tab[5]<<"\n";
+		t--;
+	}
+	else if((tab[6]<111)||(tab[6]>201))
+	{
+		cout<<"tab[6] "<<tab[6]<<"\n";
+		t--;
+			}
+			
+	if(t==0)
+    return 1;
+	else if(t<0)
+    return 0;
+}
+bool testujblum_blum()
+{
+    int wynik=-1;
+	unsigned long long suma = 0;
+	int temp;
+	unsigned int a[1000];
+	unsigned int nowa[5000];
+	unsigned int operacje = 1000; //ilosc testowanych liczb
+
+	Blum_Generator generator;
+
+	
+	for (unsigned int i = 0; i < operacje; i++) //obliczamy srednia liczb
+	{
+		a[i] = generator.losujLiczbe();
+		suma += a[i];
+}
+	zamien_na_4bity(a,nowa);
+
+//	cout<<"ilosc zer =\t"<<ilosc_zer(nowa,tab_liczb)<<"\n";
+	double x=0;
+	for(int i=0;i<16;i++)
+	{
+	//	cout<<tab_liczb[i]<<"\n";
+		x=x+tab_liczb[i]*tab_liczb[i];
+	}
+	x=16*x/5000-5000;	
+	if((2.16<x<46.17)&&(9725<ilosc_zer(nowa,tab_liczb)<10275))
+{
+	cout<<"zapisywanie do pliku\n";
+	string nazwa;
+		cout<<"podaj nazwe pliku\n";
+		cin>>nazwa;
+	zapiszdopliku(nowa,nazwa);
+	
+	odczytpliku(nowa,nazwa,tablicajedynek);
+	//cout<<"tablica z podciagami jedynek\n";
+	//for(int i=1;i<7;i++)
+	//{
+	//	cout<<tablicajedynek[i]<<"\n";
+	//}
+    wynik=spr_tablice_jedynek(tablicajedynek);
+}
+    if(wynik==1)
+        return 1;
+    else return 0;
+}
+
+
 
 
 

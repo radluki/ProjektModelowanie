@@ -17,6 +17,8 @@ public:
     virtual int losujLiczbe();
     virtual void setSeed(long long newSeed);
     virtual std::vector<int> losujTablice(int n);
+    virtual double losujLiczbe_double();
+    virtual std::vector<double> losujTablice_double(int n);
 };
 
 

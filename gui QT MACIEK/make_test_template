@@ -1,0 +1,10 @@
+all: test_template
+test_template: blum_blum.o test.o
+	g++ blum_blum.o test.o -o test_template
+	make -f make_test_template clear
+blum_blum.o: blum_generator.cpp
+	g++ blum_generator.cpp -std=c++11 -c -o blum_blum.o
+test.o:
+	g++ test.cpp -std=c++11 -c
+clear:
+	rm *.o *~

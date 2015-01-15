@@ -1,8 +1,5 @@
-//Fibonacci_main.cpp Prosty test generatora Fibonacciego - Marcin
-
-#include "Fibonacci.h"
 #include <iostream>
-#include "blum_blum.h"
+
 #include <cstdlib>
 #include <ctime>
 #include <vector>
@@ -23,53 +20,21 @@ int tablicajedynek[7];
 
 int main(void)
 {
+    srand( time( NULL ) );
+    unsigned int a[1000];
+
+	unsigned int t=rand();
+	unsigned int r=rand();
 	
-	unsigned long long suma = 0;
-	int temp;
-	unsigned int a[1000];
-	unsigned int nowa[5000];
-	unsigned int operacje = 1000; //ilosc testowanych liczb
-	//Fibonacci generator(1048575); //mozna okreslic tu wartosc maksymalna jako argument
-	Blum_Generator generator;
-	int R=0;
-	for(int j=0;j<100;j++)
+	a[0]=(t*r)%1048576;
+
+	
+	for(int i =1;i<1000;i++)
 	{
 		
-	for (unsigned int i = 0; i < operacje; i++) //obliczamy srednia liczb
-	{
-		a[i] = generator.losujLiczbe();
-		suma += a[i];
+		a[i]=(a[i-1]+rand())%1048576;
+		
 	}
-	int average = suma / operacje;
-//	std::cout << "Srednia wylosowanych liczb wynosi " << average << ".\n";
-//	std::cout << "Powinna wynosic: " << 1048576 / 2 << ".\n";
-
-	zamien_na_4bity(a,nowa);
-
-//	for(int i=0;i<50;i++)
-//	{
-//		cout<<nowa[i]<<"\t"<<a[i]<<"\n";	}
-//	
-//	cout<<"ilosc zer =\t"<<ilosc_zer(nowa,tab_liczb)<<"\n";
-	double x=0;
-	for(int i=0;i<16;i++)
-	{
-	//	cout<<tab_liczb[i]<<"\n";
-		x=x+tab_liczb[i]*tab_liczb[i];
-	}
-	x=16*x/5000-5000;	
-	if((2.16<x<46.17)&&(9725<ilosc_zer(nowa,tab_liczb)<10275))
-	R++;	
-	}
-	/*
-	for (unsigned int i = 0; i < operacje; i++) //obliczamy srednia liczb
-	{
-		a[i] = generator.losujLiczbe();
-		suma += a[i];
-	}
-	int average = suma / operacje;
-	std::cout << "Srednia wylosowanych liczb wynosi " << average << ".\n";
-	std::cout << "Powinna wynosic: " << 1048576 / 2 << ".\n";
 
 	unsigned int nowa[5000];
 	zamien_na_4bity(a,nowa);
@@ -86,9 +51,7 @@ int main(void)
 		x=x+tab_liczb[i]*tab_liczb[i];
 	}
 	x=16*x/5000-5000;
-	*/
-	//cout<<"x=\t"<<x<<"\n";
-	cout<<"R=\t"<<R<<"\n";
+	cout<<"x=\t"<<x<<"\n";
 	cout<<"zapisywanie do pliku\n";
 	string nazwa;
 		cout<<"podaj nazwe pliku\n";
@@ -208,6 +171,10 @@ void odczytpliku(unsigned int *w,string nazwa,int *tab)
 	}
 	PLIK1.close();
 }
+
+
+
+
 
 
 
