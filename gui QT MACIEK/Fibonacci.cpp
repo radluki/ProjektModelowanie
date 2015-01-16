@@ -27,7 +27,7 @@ int Fibonacci::losujLiczbe()
 double Fibonacci::losujLiczbe_double()
 {
 	seed[actual] = (seed[actual] + seed[(actual + std::abs(i - j)) % (std::max(i, j))]) % (maxnumber + 1);
-	return (seed[actual])/(maxnumber);
+	return (double)(seed[actual])/(maxnumber);
 	actual = (actual + 1) % (std::max(i, j));
 }
 std::vector<int> Fibonacci::losujTablice(int n)
