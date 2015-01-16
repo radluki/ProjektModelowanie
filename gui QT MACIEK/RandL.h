@@ -14,12 +14,17 @@ public:
 		if(x==0)setSeed(time(0));
 		else setSeed(x);
 	}
+	int losujLiczbe()
+	{
+	   return std::rand();
+	}
+	std::vector<int> losujTablice(int n);
     double losujLiczbe_double()
 	{
 		return double(std::rand())/RAND_MAX;
 	}
     std::vector<double> losujTablice_double(int n);
-	void setSeed(double newSeed)
+	void setSeed(long long newSeed)
 	{
 		std::srand(newSeed);
 	}
