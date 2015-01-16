@@ -23,13 +23,13 @@ int Blum_Generator::losujLiczbe()
 }
 double Blum_Generator::losujLiczbe_double()
 {
-    return to_draw_number()/1048576;
+    return ((double)to_draw_number())/1048576;
 }
 std::vector<double> Blum_Generator::losujTablice_double(int n)
 {
     std::vector<double> vek(n);
     for(int i=0; i<vek.size(); i++)
-        vek[i]=to_draw_number()/1048576;
+        vek[i]=((double)to_draw_number())/1048576;
     return vek;
 }
 

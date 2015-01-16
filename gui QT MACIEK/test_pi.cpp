@@ -18,7 +18,7 @@ void test_pi::testuj(Generator *gener)
 		if((wek[2*i]-0.5)*(wek[2*i]-0.5)+(wek[2*i+1]-0.5)*(wek[2*i+1]-0.5)<0.25)
 			ile_w_kole++;
 	}
-    przyblizenie_pi=4*(ile_w_kole)/ile;
+    przyblizenie_pi=(double)4*(ile_w_kole)/ile;
 
 	error=M_PI-przyblizenie_pi;
 	if(error<0)
